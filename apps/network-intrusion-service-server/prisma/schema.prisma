@@ -1,0 +1,51 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model NetworkRecord {
+  createdAt        DateTime  @default(now())
+  destinationBytes Int?
+  duration         Int?
+  flag             String?
+  id               String    @id @default(cuid())
+  protocolType     String?
+  service          String?
+  sourceBytes      Int?
+  timestamp        DateTime?
+  updatedAt        DateTime  @updatedAt
+}
+
+model DetectionResult {
+  anomalyScore  Float?
+  createdAt     DateTime  @default(now())
+  detectionTime DateTime?
+  id            String    @id @default(cuid())
+  isAnomalous   Boolean?
+  recordId      String?
+  updatedAt     DateTime  @updatedAt
+}
+
+model AnomalyType {
+  createdAt   DateTime @default(now())
+  description String?
+  id          String   @id @default(cuid())
+  name        String?
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
